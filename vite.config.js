@@ -16,7 +16,6 @@ export default defineConfig({
     },
   },
   // GitHub Pages 배포를 위한 base 설정
-  // 저장소 이름이 'mycareer'라면 '/mycareer/'로 설정
-  // username.github.io 저장소라면 '/'로 설정
-  base: '/yangs1s/',
+  // 저장소 이름에 맞게 수정하세요
+  base: '/career-page/', // 실제 저장소 이름으로 변경
 })
