@@ -1,9 +1,9 @@
 export const profile = {
   name: '양성진',
   title: 'Frontend Developer',
-  email: 'hello@example.com',
-  github: 'github.com/username',
-  linkedin: 'linkedin.com/in/username',
+  email: 'sung5355@gmail.com',
+  github: 'github.com/yangs1s',
+  linkedin: 'linkedin.com/in/yangs1s',
   bio: '혁신적인 웹 솔루션을 만드는 것을 좋아하는 개발자입니다. 사용자 경험과 코드 품질에 열정을 가지고 있습니다.',
   // 프로필 이미지 경로 (public 폴더에 이미지를 넣거나 URL을 사용하세요)
   image: '/profile.jpg' // 또는 'https://example.com/your-image.jpg'
