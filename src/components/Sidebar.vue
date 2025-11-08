@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useTheme } from '../composables/useTheme'
 
 defineProps({
   profileName: String,
@@ -7,7 +8,8 @@ defineProps({
 })
 
 const isOpen = ref(false)
-const activeSection = ref('home')
+const activeSection = ref('profile')
+const { isDark, toggleTheme } = useTheme()
 
 const scrollToSection = (sectionId) => {
   document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
@@ -20,17 +22,24 @@ const toggleSidebar = () => {
 
 // 현재 보이는 섹션 감지
 const updateActiveSection = () => {
-  const sections = ['home', 'about', 'experience', 'skills', 'projects', 'contact']
-  const scrollPosition = window.scrollY + window.innerHeight / 3
+  const sections = ['profile', 'experience', 'projects', 'skills']
+  const scrollPosition = window.scrollY + 200 // 상단에서 200px 아래 지점 기준
+  const windowHeight = window.innerHeight
+  const documentHeight = document.documentElement.scrollHeight
 
-  for (const sectionId of sections) {
+  // 페이지 하단 근처(마지막 100px)에 도달하면 마지막 섹션 활성화
+  if (window.scrollY + windowHeight >= documentHeight - 100) {
+    activeSection.value = sections[sections.length - 1]
+    return
+  }
+
+  // 역순으로 검사하여 현재 스크롤 위치보다 위에 있는 섹션 중 가장 가까운 것 찾기
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const sectionId = sections[i]
     const element = document.getElementById(sectionId)
-    if (element) {
-      const { offsetTop, offsetHeight } = element
-      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-        activeSection.value = sectionId
-        break
-      }
+    if (element && element.offsetTop <= scrollPosition) {
+      activeSection.value = sectionId
+      break
     }
   }
 }
@@ -56,14 +65,18 @@ onUnmounted(() => {
   <!-- 사이드바 -->
   <aside class="sidebar" :class="{ open: isOpen }">
     <div class="sidebar-content">
+      <!-- 테마 토글 버튼 -->
+      <button @click="toggleTheme" class="theme-toggle" :title="isDark ? '라이트 모드' : '다크 모드'">
+        <span v-if="isDark">☀️</span>
+        <span v-else>🌙</span>
+      </button>
+
       <!-- 네비게이션 링크 -->
       <nav class="nav-links">
-        <a @click="scrollToSection('home')" class="nav-link" :class="{ active: activeSection === 'home' }">홈</a>
-        <a @click="scrollToSection('about')" class="nav-link" :class="{ active: activeSection === 'about' }">소개</a>
+        <a @click="scrollToSection('profile')" class="nav-link" :class="{ active: activeSection === 'profile' }">프로필</a>
         <a @click="scrollToSection('experience')" class="nav-link" :class="{ active: activeSection === 'experience' }">경력</a>
-        <a @click="scrollToSection('skills')" class="nav-link" :class="{ active: activeSection === 'skills' }">스킬</a>
         <a @click="scrollToSection('projects')" class="nav-link" :class="{ active: activeSection === 'projects' }">프로젝트</a>
-        <a @click="scrollToSection('contact')" class="nav-link" :class="{ active: activeSection === 'contact' }">연락</a>
+        <a @click="scrollToSection('skills')" class="nav-link" :class="{ active: activeSection === 'skills' }">스킬</a>
       </nav>
     </div>
   </aside>
@@ -93,6 +106,28 @@ onUnmounted(() => {
   flex-direction: column;
   width: 100%;
   padding: 2rem 0;
+}
+
+/* 테마 토글 버튼 */
+.theme-toggle {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-card-hover);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--glow);
 }
 
 /* 네비게이션 */
@@ -246,11 +281,11 @@ onUnmounted(() => {
 }
 
 .sidebar::-webkit-scrollbar-track {
-  background: var(--bg-darker);
+  background: var(--bg-dark);
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--bg-card-hover);
   border-radius: 3px;
 }
 

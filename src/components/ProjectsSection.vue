@@ -1,4 +1,6 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+
 defineProps({
   projects: Array
 })
@@ -12,12 +14,16 @@ defineProps({
         <div v-for="(project, index) in projects" :key="index" class="project-card fade-in">
           <div class="project-header">
             <h3>{{ project.title }}</h3>
+            <span class="project-period" v-if="project.period">{{ project.period }}</span>
           </div>
           <p class="project-description">{{ project.description }}</p>
           <div class="project-tech">
-            <span v-for="tech in project.tech" :key="tech" class="tech-tag">{{ tech }}</span>
+            <span v-for="tech in project.tech.slice(0, 3)" :key="tech" class="tech-tag">{{ tech }}</span>
+            <span v-if="project.tech.length > 3" class="tech-more">+{{ project.tech.length - 3 }}</span>
           </div>
-          <a :href="project.link" class="project-link">자세히 보기 →</a>
+          <RouterLink :to="`/projects/${project.id}`" class="project-link">
+            자세히 보기 →
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -68,10 +74,22 @@ defineProps({
   border-color: var(--primary);
 }
 
+.project-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 .project-header h3 {
   font-size: 1.5rem;
   color: var(--text-primary);
-  margin-bottom: 1rem;
+  margin: 0;
+}
+
+.project-period {
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .project-description {
@@ -88,7 +106,16 @@ defineProps({
 
 .tech-tag {
   background: var(--primary);
-  color: black;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tech-more {
+  background: var(--bg-card-hover);
+  color: var(--text-muted);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.85rem;

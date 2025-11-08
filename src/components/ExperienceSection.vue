@@ -47,13 +47,13 @@ defineProps({
 
 .timeline {
   position: relative;
-  padding-left: 2rem;
+  padding-left: 3rem;
 }
 
 .timeline::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: 6px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -67,10 +67,10 @@ defineProps({
 
 .timeline-dot {
   position: absolute;
-  left: -2.5rem;
-  top: 0;
-  width: 12px;
-  height: 12px;
+  left: -3rem;
+  top: 0.5rem;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--primary);
   box-shadow: 0 0 0 4px var(--bg-dark), 0 0 0 6px var(--primary);

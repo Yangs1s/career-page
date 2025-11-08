@@ -9,7 +9,7 @@ const scrollToSection = (sectionId) => {
 </script>
 
 <template>
-  <section id="home" class="hero-section">
+  <section id="profile" class="hero-section">
     <div class="hero-container fade-in">
       <div class="hero-image-wrapper">
         <div class="hero-image">
@@ -23,10 +23,23 @@ const scrollToSection = (sectionId) => {
         <h1 class="hero-title">안녕하세요, <span class="gradient-text">{{ profile.name }}</span>입니다</h1>
         <p class="hero-subtitle">{{ profile.title }}</p>
         <p class="hero-bio">{{ profile.bio }}</p>
-        <div class="hero-buttons">
-          <button @click="scrollToSection('projects')" class="btn btn-primary">프로젝트 보기</button>
-          <button @click="scrollToSection('contact')" class="btn btn-secondary">연락하기</button>
+        
+        <!-- 연락처 정보 -->
+        <div class="contact-info">
+          <a :href="'mailto:' + profile.email" class="contact-link">
+            <span class="contact-icon">📧</span>
+            {{ profile.email }}
+          </a>
+          <a :href="'https://' + profile.github" target="_blank" class="contact-link">
+            <span class="contact-icon">💻</span>
+            GitHub
+          </a>
+          <!-- <a :href="'https://' + profile.linkedin" target="_blank" class="contact-link">
+            <span class="contact-icon">💼</span>
+            LinkedIn
+          </a> -->
         </div>
+
       </div>
     </div>
   </section>
@@ -81,13 +94,13 @@ const scrollToSection = (sectionId) => {
   background: var(--primary);
   font-size: 5rem;
   font-weight: bold;
-  color: black;
+  color: white;
 }
 
 .hero-content {
   flex: 1;
   text-align: left;
-  color: white;
+  color: var(--text-primary);
 }
 
 .hero-title {
@@ -109,9 +122,42 @@ const scrollToSection = (sectionId) => {
 
 .hero-bio {
   font-size: 1.1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   opacity: 0.8;
   line-height: 1.6;
+}
+
+.contact-info {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 25px;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.contact-link:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--glow);
+}
+
+.contact-icon {
+  font-size: 1.2rem;
 }
 
 .hero-buttons {
@@ -132,7 +178,7 @@ const scrollToSection = (sectionId) => {
 
 .btn-primary {
   background: var(--primary);
-  color: black;
+  color: white;
   font-weight: 600;
 }
 
@@ -143,8 +189,8 @@ const scrollToSection = (sectionId) => {
 
 .btn-secondary {
   background: transparent;
-  color: white;
-  border: 2px solid white;
+  color: var(--text-primary);
+  border: 2px solid var(--border);
 }
 
 .btn-secondary:hover {
@@ -185,6 +231,10 @@ const scrollToSection = (sectionId) => {
   
   .hero-subtitle {
     font-size: 1.2rem;
+  }
+  
+  .contact-info {
+    justify-content: center;
   }
   
   .hero-buttons {

@@ -43,8 +43,10 @@ defineProps({
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .skill-item {
@@ -92,6 +94,7 @@ defineProps({
   
   .skills-grid {
     grid-template-columns: 1fr;
+    max-width: 500px;
   }
 }
 
