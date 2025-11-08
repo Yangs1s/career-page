@@ -100,6 +100,52 @@ export const projects = [
 - **Vite**: 빌드 도구
 - **CSS3**: 스타일링 (Flexbox, Grid, Animations)
 
+## 🚀 GitHub Pages 배포하기
+
+### 자동 배포 (권장)
+
+1. **GitHub 저장소 생성 및 푸시**
+
+```bash
+cd my-career-page
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/your-username/your-repo-name.git
+git push -u origin main
+```
+
+2. **GitHub Pages 설정**
+   - GitHub 저장소 → Settings → Pages
+   - Source: GitHub Actions 선택
+   - 자동으로 배포 시작됨
+
+3. **base URL 수정** (중요!)
+   
+   `vite.config.js`에서 저장소 이름에 맞게 수정:
+   
+   ```javascript
+   base: '/your-repo-name/',  // 저장소 이름으로 변경
+   // 또는 username.github.io 저장소라면
+   base: '/',
+   ```
+
+4. **배포 완료!**
+   - URL: `https://your-username.github.io/your-repo-name/`
+   - 또는: `https://your-username.github.io/` (username.github.io 저장소의 경우)
+
+### 수동 배포 (선택사항)
+
+gh-pages 패키지를 사용한 수동 배포:
+
+```bash
+# gh-pages 패키지 설치
+pnpm add -D gh-pages
+
+# 빌드 & 배포
+pnpm run deploy
+```
+
 ## 📝 라이센스
 
 개인 및 상업적 용도로 자유롭게 사용하세요!
