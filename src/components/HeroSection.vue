@@ -29,6 +29,7 @@ const getSkillIcon = skillName => {
 <template>
   <section id="profile" class="hero-section">
     <div class="hero-container">
+      <!-- 텍스트 콘텐츠 (왼쪽) -->
       <div class="hero-content">
         <!-- 타이틀 -->
         <h1 class="hero-title animate-item" style="--delay: 0">
@@ -65,15 +66,6 @@ const getSkillIcon = skillName => {
             <span class="contact-icon">📄</span>
             이력서 다운로드
           </a>
-          <a
-            v-if="profile.notionUrl"
-            :href="profile.notionUrl"
-            target="_blank"
-            class="contact-link notion-link"
-          >
-            <span class="contact-icon">📝</span>
-            경력기술서 (Notion)
-          </a>
         </div>
 
         <!-- 기술 스택 -->
@@ -98,6 +90,17 @@ const getSkillIcon = skillName => {
               <span class="skill-name">{{ skill.name }}</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- 프로필 이미지 (오른쪽) -->
+      <div
+        class="hero-image-wrapper animate-item"
+        style="--delay: 0"
+        v-if="profile.image"
+      >
+        <div class="hero-image">
+          <img :src="profile.image" :alt="profile.name" />
         </div>
       </div>
     </div>
@@ -156,11 +159,36 @@ const getSkillIcon = skillName => {
   width: 100%;
   position: relative;
   z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .hero-content {
+  flex: 1;
   text-align: left;
   color: var(--text-primary);
+}
+
+/* 프로필 이미지 */
+.hero-image-wrapper {
+  flex-shrink: 0;
+}
+
+.hero-image {
+  width: 240px;
+  height: 540px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  background: var(--bg-darker);
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-title {
@@ -183,8 +211,12 @@ const getSkillIcon = skillName => {
 .hero-bio {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
-  opacity: 0.8;
-  line-height: 1.6;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 1rem;
+  background: var(--bg-darker);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
 }
 
 .contact-info {
@@ -222,29 +254,30 @@ const getSkillIcon = skillName => {
 
 /* 이력서 다운로드 버튼 강조 스타일 */
 .resume-link {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+  background: #2d3748;
+  color: #fff;
+  border-color: #2d3748;
   font-weight: 600;
 }
 
 .resume-link:hover {
   background: transparent;
-  color: var(--primary);
+  color: var(--text-primary);
+  border-color: var(--primary);
   box-shadow: 0 5px 20px var(--glow);
 }
 
-/* 노션 링크 버튼 스타일 */
-.notion-link {
-  background: var(--bg-darker);
-  border-color: var(--border);
-  font-weight: 500;
+/* 다크모드에서 이력서 버튼 */
+:root.dark .resume-link {
+  background: #e2e8f0;
+  color: #1a202c;
+  border-color: #e2e8f0;
 }
 
-.notion-link:hover {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+:root.dark .resume-link:hover {
+  background: transparent;
+  color: #e2e8f0;
+  border-color: #e2e8f0;
 }
 
 /* 기술 스택 섹션 */
@@ -335,9 +368,31 @@ const getSkillIcon = skillName => {
   transform: translateY(-2px);
 }
 
+@media (max-width: 1024px) {
+  .hero-image {
+    width: 200px;
+    height: 450px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
     padding: 4rem 1.5rem 2rem;
+  }
+
+  .hero-container {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-image {
+    width: 200px;
+    height: 280px;
   }
 
   .hero-title {
@@ -346,6 +401,18 @@ const getSkillIcon = skillName => {
 
   .hero-subtitle {
     font-size: 1.1rem;
+  }
+
+  .hero-bio {
+    text-align: left;
+  }
+
+  .contact-info {
+    justify-content: center;
+  }
+
+  .skills-list {
+    justify-content: center;
   }
 }
 
@@ -356,6 +423,11 @@ const getSkillIcon = skillName => {
 
   .hero-title {
     font-size: 1.5rem;
+  }
+
+  .hero-image {
+    width: 160px;
+    height: 220px;
   }
 }
 </style>

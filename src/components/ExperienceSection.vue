@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
-  experience: Array
-})
+  experience: Array,
+});
 </script>
 
 <template>
@@ -9,13 +9,19 @@ defineProps({
     <div class="container">
       <h2 class="section-title fade-in">회사 경력</h2>
       <div class="experience-list">
-        <div v-for="(exp, index) in experience" :key="index" class="experience-item fade-in">
+        <div
+          v-for="(exp, index) in experience"
+          :key="index"
+          class="experience-item fade-in"
+        >
           <div class="experience-header">
             <h3 class="company">{{ exp.company }}</h3>
             <span class="period">{{ exp.period }}</span>
           </div>
           <p class="position">{{ exp.position }}</p>
-          <p class="description" v-if="exp.description">{{ exp.description }}</p>
+          <p class="description" v-if="exp.description">
+            {{ exp.description }}
+          </p>
         </div>
       </div>
     </div>

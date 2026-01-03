@@ -5,7 +5,7 @@ export const profile = {
   github: "github.com/yangs1s",
   linkedin: "linkedin.com/in/yangs1s",
   bio: "저는 팀의 생산성을 높이는 것을 좋아하는 개발자입니다. 팀원간의 소통과 협업을 중요하게 생각합니다.",
-  image: "/career-page/my-profile.jpeg", // GitHub Pages base URL 포함
+  image: "/career-page/my-profile.PNG", // GitHub Pages base URL 포함
   // Google Drive 이력서 다운로드 링크
   resumeUrl:
     "https://drive.google.com/file/d/1JXNfXsoA9NggBeSgb5yeDAThJgAeSp_1/view?usp=sharing",
@@ -50,5 +50,36 @@ export const education = [
     name: "가천대학교 전자공학과 (편입)",
     status: "졸업",
     period: "2017.03 - 2020.08",
+  },
+];
+
+export const projects = [
+  {
+    title: "모벤티스",
+    summary: "운송 물류 시스템 ERP",
+    techStack: ["React", "TypeScript", "Jotai", "Tanstack-table", "Next.js"],
+    links: {
+      demo: "",
+      notion:
+        "https://www.notion.so/2a709d8c37b88167b612cb80d899fe2b?source=copy_link",
+    },
+  },
+  {
+    title: "식자재를 Eat-da",
+    summary:
+      "식자재 유통업자와 자영업자간의 구매판매를 연결해주는 플랫폼 서비스",
+    techStack: [
+      "React",
+      "TypeScript",
+      "Jotai",
+      "Tanstack-table",
+      "Next.js",
+      "SendBird SDK",
+    ],
+    links: {
+      demo: "",
+      notion:
+        "https://www.notion.so/Eat-da-2d809d8c37b88041bd53e7e5a090163a?source=copy_link",
+    },
   },
 ];

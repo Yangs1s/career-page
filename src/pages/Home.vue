@@ -1,10 +1,17 @@
 <script setup>
 import { onMounted } from "vue";
 import HeroSection from "../components/HeroSection.vue";
+import ProjectSection from "../components/ProjectSection.vue";
 import ExperienceSection from "../components/ExperienceSection.vue";
 import EducationSection from "../components/EducationSection.vue";
 import { useTheme } from "../composables/useTheme";
-import { profile, experience, skills, education } from "../data/profile.js";
+import {
+  profile,
+  experience,
+  skills,
+  education,
+  projects,
+} from "../data/profile.js";
 
 const { isDark, toggleTheme } = useTheme();
 
@@ -39,6 +46,7 @@ onMounted(() => {
 
     <div class="main-content">
       <HeroSection :profile="profile" :skills="skills" />
+      <ProjectSection :projects="projects" />
       <ExperienceSection :experience="experience" />
       <EducationSection :education="education" />
     </div>
