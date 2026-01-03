@@ -1,11 +1,11 @@
 <script setup>
 defineProps({
-  profile: Object
-})
+  profile: Object,
+});
 
-const scrollToSection = (sectionId) => {
-  document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
-}
+const scrollToSection = sectionId => {
+  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+};
 </script>
 
 <template>
@@ -20,17 +20,24 @@ const scrollToSection = (sectionId) => {
         </div>
       </div>
       <div class="hero-content">
-        <h1 class="hero-title">안녕하세요, <span class="gradient-text">{{ profile.name }}</span>입니다</h1>
+        <h1 class="hero-title">
+          안녕하세요, <span class="gradient-text">{{ profile.name }}</span
+          >입니다
+        </h1>
         <p class="hero-subtitle">{{ profile.title }}</p>
         <p class="hero-bio">{{ profile.bio }}</p>
-        
+
         <!-- 연락처 정보 -->
         <div class="contact-info">
           <a :href="'mailto:' + profile.email" class="contact-link">
             <span class="contact-icon">📧</span>
             {{ profile.email }}
           </a>
-          <a :href="'https://' + profile.github" target="_blank" class="contact-link">
+          <a
+            :href="'https://' + profile.github"
+            target="_blank"
+            class="contact-link"
+          >
             <span class="contact-icon">💻</span>
             GitHub
           </a>
@@ -38,8 +45,16 @@ const scrollToSection = (sectionId) => {
             <span class="contact-icon">💼</span>
             LinkedIn
           </a> -->
+          <a
+            v-if="profile.resumeUrl"
+            :href="profile.resumeUrl"
+            target="_blank"
+            class="contact-link resume-link"
+          >
+            <span class="contact-icon">📄</span>
+            이력서 다운로드
+          </a>
         </div>
-
       </div>
     </div>
   </section>
@@ -160,6 +175,20 @@ const scrollToSection = (sectionId) => {
   font-size: 1.2rem;
 }
 
+/* 이력서 다운로드 버튼 강조 스타일 */
+.resume-link {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  font-weight: 600;
+}
+
+.resume-link:hover {
+  background: transparent;
+  color: var(--primary);
+  box-shadow: 0 5px 20px var(--glow);
+}
+
 .hero-buttons {
   display: flex;
   gap: 1rem;
@@ -205,38 +234,38 @@ const scrollToSection = (sectionId) => {
     min-height: 50vh;
     padding: 3rem 2rem;
   }
-  
+
   .hero-container {
     flex-direction: column;
     gap: 2rem;
     text-align: center;
   }
-  
+
   .hero-content {
     text-align: center;
   }
-  
+
   .hero-image {
     width: 150px;
     height: 150px;
   }
-  
+
   .hero-placeholder {
     font-size: 4rem;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.2rem;
   }
-  
+
   .contact-info {
     justify-content: center;
   }
-  
+
   .hero-buttons {
     justify-content: center;
   }
@@ -247,19 +276,18 @@ const scrollToSection = (sectionId) => {
     min-height: 50vh;
     padding: 2rem 1rem;
   }
-  
+
   .hero-image {
     width: 120px;
     height: 120px;
   }
-  
+
   .hero-placeholder {
     font-size: 3rem;
   }
-  
+
   .hero-title {
     font-size: 1.75rem;
   }
 }
 </style>
-
