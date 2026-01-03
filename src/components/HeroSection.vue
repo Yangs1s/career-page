@@ -1,34 +1,49 @@
 <script setup>
 defineProps({
   profile: Object,
+  skills: Array,
 });
 
-const scrollToSection = sectionId => {
-  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+// 기술 스택 아이콘 매핑 (devicon)
+const skillIcons = {
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  "Vue.js": "vuejs",
+  React: "react",
+  "React.js": "react",
+  HTML: "html5",
+  CSS: "css3",
+  "Node.js": "nodejs",
+  Git: "git",
+  "Tanstack Query": "reactrouter", // 유사 아이콘
+  Zustand: null,
+  Jotai: null,
+  Tailwind: "tailwindcss",
+};
+
+const getSkillIcon = skillName => {
+  return skillIcons[skillName] || null;
 };
 </script>
 
 <template>
   <section id="profile" class="hero-section">
-    <div class="hero-container fade-in">
-      <div class="hero-image-wrapper">
-        <div class="hero-image">
-          <img :src="profile.image" :alt="profile.name" v-if="profile.image" />
-          <div class="hero-placeholder" v-else>
-            <span>{{ profile.name.charAt(0) }}</span>
-          </div>
-        </div>
-      </div>
+    <div class="hero-container">
       <div class="hero-content">
-        <h1 class="hero-title">
+        <!-- 타이틀 -->
+        <h1 class="hero-title animate-item" style="--delay: 0">
           안녕하세요, <span class="gradient-text">{{ profile.name }}</span
           >입니다
         </h1>
-        <p class="hero-subtitle">{{ profile.title }}</p>
-        <p class="hero-bio">{{ profile.bio }}</p>
+        <p class="hero-subtitle animate-item" style="--delay: 1">
+          {{ profile.title }}
+        </p>
+        <p class="hero-bio animate-item" style="--delay: 2">
+          {{ profile.bio }}
+        </p>
 
         <!-- 연락처 정보 -->
-        <div class="contact-info">
+        <div class="contact-info animate-item" style="--delay: 3">
           <a :href="'mailto:' + profile.email" class="contact-link">
             <span class="contact-icon">📧</span>
             {{ profile.email }}
@@ -41,10 +56,6 @@ const scrollToSection = sectionId => {
             <span class="contact-icon">💻</span>
             GitHub
           </a>
-          <!-- <a :href="'https://' + profile.linkedin" target="_blank" class="contact-link">
-            <span class="contact-icon">💼</span>
-            LinkedIn
-          </a> -->
           <a
             v-if="profile.resumeUrl"
             :href="profile.resumeUrl"
@@ -54,6 +65,39 @@ const scrollToSection = sectionId => {
             <span class="contact-icon">📄</span>
             이력서 다운로드
           </a>
+          <a
+            v-if="profile.notionUrl"
+            :href="profile.notionUrl"
+            target="_blank"
+            class="contact-link notion-link"
+          >
+            <span class="contact-icon">📝</span>
+            경력기술서 (Notion)
+          </a>
+        </div>
+
+        <!-- 기술 스택 -->
+        <div
+          class="skills-section animate-item"
+          style="--delay: 4"
+          v-if="skills && skills.length"
+        >
+          <h3 class="skills-title">Tech Stack</h3>
+          <div class="skills-list">
+            <div
+              v-for="(skill, index) in skills"
+              :key="skill.name"
+              class="skill-badge skill-animate"
+              :style="{ '--skill-delay': index }"
+              :title="skill.name"
+            >
+              <i
+                v-if="getSkillIcon(skill.name)"
+                :class="`devicon-${getSkillIcon(skill.name)}-plain colored`"
+              ></i>
+              <span class="skill-name">{{ skill.name }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,59 +105,60 @@ const scrollToSection = sectionId => {
 </template>
 
 <style scoped>
+/* 진입 애니메이션 */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skillPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-item {
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease-out forwards;
+  animation-delay: calc(var(--delay) * 0.1s);
+}
+
+.skill-animate {
+  opacity: 0;
+  animation: skillPopIn 0.3s ease-out forwards;
+  animation-delay: calc(0.5s + var(--skill-delay) * 0.06s);
+}
+
 .hero-section {
-  min-height: 60vh;
+  min-height: auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
   overflow: hidden;
   background: var(--bg-dark);
-  padding: 4rem 2rem;
+  padding: 3rem 2rem 2rem;
 }
 
 .hero-container {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  max-width: 1000px;
+  max-width: 800px;
+  width: 100%;
   position: relative;
   z-index: 10;
 }
 
-.hero-image-wrapper {
-  flex-shrink: 0;
-}
-
-.hero-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--primary);
-  box-shadow: 0 0 30px var(--glow);
-}
-
-.hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primary);
-  font-size: 5rem;
-  font-weight: bold;
-  color: white;
-}
-
 .hero-content {
-  flex: 1;
   text-align: left;
   color: var(--text-primary);
 }
@@ -189,6 +234,67 @@ const scrollToSection = sectionId => {
   box-shadow: 0 5px 20px var(--glow);
 }
 
+/* 노션 링크 버튼 스타일 */
+.notion-link {
+  background: var(--bg-darker);
+  border-color: var(--border);
+  font-weight: 500;
+}
+
+.notion-link:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* 기술 스택 섹션 */
+.skills-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.skills-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-darker);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.skill-badge:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.skill-badge i {
+  font-size: 1.25rem;
+}
+
+.skill-name {
+  font-weight: 500;
+}
+
 .hero-buttons {
   display: flex;
   gap: 1rem;
@@ -231,63 +337,25 @@ const scrollToSection = sectionId => {
 
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 50vh;
-    padding: 3rem 2rem;
-  }
-
-  .hero-container {
-    flex-direction: column;
-    gap: 2rem;
-    text-align: center;
-  }
-
-  .hero-content {
-    text-align: center;
-  }
-
-  .hero-image {
-    width: 150px;
-    height: 150px;
-  }
-
-  .hero-placeholder {
-    font-size: 4rem;
+    padding: 4rem 1.5rem 2rem;
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
-  }
-
-  .contact-info {
-    justify-content: center;
-  }
-
-  .hero-buttons {
-    justify-content: center;
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 480px) {
   .hero-section {
-    min-height: 50vh;
-    padding: 2rem 1rem;
-  }
-
-  .hero-image {
-    width: 120px;
-    height: 120px;
-  }
-
-  .hero-placeholder {
-    font-size: 3rem;
+    padding: 4rem 1rem 1.5rem;
   }
 
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 }
 </style>

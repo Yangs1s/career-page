@@ -5,66 +5,81 @@
 }
 
 :root {
-  /* Base Colors - 테마에 따라 변경됨 */
-}
-
-/* Dark Mode - 민트/에메랄드 스타일 */
-:root.dark {
-  /* Green Theme Colors */
-  --primary: #10b981;
-  --primary-dark: #059669;
-  --secondary: #34d399;
-  --accent: #6ee7b7;
+  /* Base Colors - 깔끔하고 눈에 편한 스타일 */
+  /* 하얀 바탕 + 진한 색 (차콜/네이비) */
+  --primary: #2d3748;
+  --primary-dark: #1a202c;
+  --secondary: #4a5568;
+  --accent: #718096;
   
-  /* Dark Backgrounds */
-  --bg-dark: #0f172a;
-  --bg-darker: #020617;
-  --bg-card: #1e293b;
-  --bg-card-hover: #334155;
-  
-  /* Text Colors */
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  
-  /* Borders & Shadows */
-  --border: #334155;
-  --shadow: rgba(0, 0, 0, 0.8);
-  --glow: rgba(16, 185, 129, 0.4);
-}
-
-/* Light Mode - 민트/에메랄드 스타일 */
-:root.light {
-  /* Green Theme Colors */
-  --primary: #059669;
-  --primary-dark: #047857;
-  --secondary: #10b981;
-  --accent: #0d9488;
-  
-  /* Light Backgrounds */
-  --bg-dark: #f9fafb;
-  --bg-darker: #f3f4f6;
+  /* Clean White Backgrounds */
+  --bg-dark: #ffffff;
+  --bg-darker: #f7fafc;
   --bg-card: #ffffff;
-  --bg-card-hover: #f3f4f6;
+  --bg-card-hover: #f7fafc;
   
   /* Text Colors */
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #6b7280;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
   
   /* Borders & Shadows */
-  --border: #e5e7eb;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --glow: rgba(5, 150, 105, 0.3);
+  --border: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --glow: rgba(45, 55, 72, 0.1);
+}
+
+/* Light Mode - 기본 (하얀 바탕) */
+:root.light {
+  --primary: #2d3748;
+  --primary-dark: #1a202c;
+  --secondary: #4a5568;
+  --accent: #718096;
+  
+  --bg-dark: #ffffff;
+  --bg-darker: #f7fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f7fafc;
+  
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  
+  --border: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --glow: rgba(45, 55, 72, 0.1);
+}
+
+/* Dark Mode - 더 어두운 다크 */
+:root.dark {
+  --primary: #e2e8f0;
+  --primary-dark: #cbd5e0;
+  --secondary: #a0aec0;
+  --accent: #718096;
+  
+  --bg-dark: #0d1117;
+  --bg-darker: #010409;
+  --bg-card: #161b22;
+  --bg-card-hover: #21262d;
+  
+  --text-primary: #f0f6fc;
+  --text-secondary: #c9d1d9;
+  --text-muted: #8b949e;
+  
+  --border: #30363d;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --glow: rgba(240, 246, 252, 0.1);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: var(--text-primary);
   background: var(--bg-dark);
   line-height: 1.6;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 전역 테마 전환 */
