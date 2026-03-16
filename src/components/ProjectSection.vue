@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-defineProps({
+const props = defineProps({
   projects: Array,
 });
 
@@ -12,18 +12,25 @@ const toggle = (key) => {
 };
 
 const isOpen = (key) => !!openSections.value[key];
+
+const sideProjects = computed(() => props.projects.filter(p => p.type === "side"));
+const workProjects = computed(() => props.projects.filter(p => p.type === "work"));
 </script>
 
 <template>
   <section id="projects" class="section">
     <div class="container">
       <h2 class="section-title fade-in">주요 프로젝트</h2>
-      <div class="project-list">
-        <div
-          v-for="(project, pIdx) in projects"
-          :key="pIdx"
-          class="project-item fade-in"
-        >
+
+      <!-- 사이드 프로젝트 -->
+      <div class="project-group fade-in">
+        <h3 class="group-title">사이드 프로젝트</h3>
+        <div class="project-list">
+          <div
+            v-for="(project, pIdx) in sideProjects"
+            :key="'side-' + pIdx"
+            class="project-item"
+          >
           <!-- 기본 정보 -->
           <div class="project-header">
             <div class="project-title-group">
@@ -155,6 +162,79 @@ const isOpen = (key) => !!openSections.value[key];
           </div>
         </div>
       </div>
+      </div>
+
+      <!-- 실무 프로젝트 -->
+      <div class="project-group fade-in">
+        <h3 class="group-title">실무 프로젝트</h3>
+        <div class="project-list">
+          <div
+            v-for="(project, pIdx) in workProjects"
+            :key="'work-' + pIdx"
+            class="project-item"
+          >
+            <!-- 기본 정보 -->
+            <div class="project-header">
+              <div class="project-title-group">
+                <h3 class="project-title">{{ project.title }}</h3>
+                <span v-if="project.period" class="project-period">{{ project.period }}</span>
+              </div>
+              <div class="project-links">
+                <a v-if="project.links.demo" :href="project.links.demo" target="_blank" class="project-link">🔗 데모</a>
+                <a v-if="project.links.notion" :href="project.links.notion" target="_blank" class="project-link">📝 프로젝트 설명</a>
+              </div>
+            </div>
+            <p class="project-summary">{{ project.summary }}</p>
+            <div class="tech-tags">
+              <span v-for="tech in project.techStack" :key="tech" class="tech-tag">{{ tech }}</span>
+            </div>
+
+            <!-- 기술적 의사결정 -->
+            <div v-if="project.techDecisions?.length" class="detail-section">
+              <button class="toggle-btn" @click="toggle(`work-${pIdx}-decisions`)">
+                <span class="toggle-label">⚙️ 기술적 의사결정</span>
+                <span class="toggle-icon" :class="{ open: isOpen(`work-${pIdx}-decisions`) }">▾</span>
+              </button>
+              <div v-if="isOpen(`work-${pIdx}-decisions`)" class="toggle-content">
+                <div v-for="(decision, dIdx) in project.techDecisions" :key="dIdx" class="decision-item">
+                  <h4 class="detail-title">{{ decision.title }}</h4>
+                  <p class="detail-desc">{{ decision.description }}</p>
+                  <p v-if="decision.result" class="result-tag">✓ {{ decision.result }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 트러블슈팅 -->
+            <div v-if="project.troubleshooting?.length" class="detail-section">
+              <button class="toggle-btn" @click="toggle(`work-${pIdx}-troubleshooting`)">
+                <span class="toggle-label">🔧 트러블슈팅</span>
+                <span class="toggle-icon" :class="{ open: isOpen(`work-${pIdx}-troubleshooting`) }">▾</span>
+              </button>
+              <div v-if="isOpen(`work-${pIdx}-troubleshooting`)" class="toggle-content">
+                <div v-for="(item, tIdx) in project.troubleshooting" :key="tIdx" class="trouble-item">
+                  <h4 class="detail-title">{{ tIdx + 1 }}. {{ item.title }}</h4>
+                  <div class="trouble-block">
+                    <p class="trouble-label">배경</p>
+                    <p class="detail-desc">{{ item.background }}</p>
+                  </div>
+                  <div class="trouble-block">
+                    <p class="trouble-label">해결</p>
+                    <p class="detail-desc">{{ item.solution }}</p>
+                  </div>
+                  <pre v-if="item.code" class="code-block"><code>{{ item.code }}</code></pre>
+                  <div v-if="item.before || item.after" class="before-after">
+                    <span class="before-tag">before</span>
+                    <span class="ba-text">{{ item.before }}</span>
+                    <span class="after-tag">after</span>
+                    <span class="ba-text">{{ item.after }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 </template>
@@ -175,6 +255,25 @@ const isOpen = (key) => !!openSections.value[key];
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
+}
+
+.project-group {
+  margin-bottom: 2.5rem;
+}
+
+.project-group:last-child {
+  margin-bottom: 0;
+}
+
+.group-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .project-list {

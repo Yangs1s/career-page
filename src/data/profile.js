@@ -55,6 +55,7 @@ export const education = [
 
 export const projects = [
   {
+    type: "side",
     title: "사이드메이트",
     summary: "개발자 사이드 프로젝트 팀원 매칭 플랫폼",
     period: "2024.10 - 진행 중",
@@ -145,6 +146,7 @@ const handleOpen = (open: boolean) => {
     ],
   },
   {
+    type: "work",
     title: "모벤티스",
     summary: "운송업체 배송관리 시스템 ERP",
     period: "2024.11 - 2025.06",
@@ -190,6 +192,7 @@ const handleOpen = (open: boolean) => {
     ],
   },
   {
+    type: "work",
     title: "식자재를 Eat-da",
     summary:
       "식자재 유통업자와 자영업자간의 구매판매를 연결해주는 플랫폼 서비스",
