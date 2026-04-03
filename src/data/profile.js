@@ -8,7 +8,7 @@ export const profile = {
   image: "/career-page/my-profile.PNG", // GitHub Pages base URL 포함
   // Google Drive 이력서 다운로드 링크
   resumeUrl:
-    "https://drive.google.com/file/d/1JXNfXsoA9NggBeSgb5yeDAThJgAeSp_1/view?usp=sharing",
+    "https://drive.google.com/file/d/1LBy8cyuObltogwkJJu2bQcLJHNpuhm0W/view?usp=drive_link",
   // 노션 경력기술서 링크
   notionUrl:
     "https://www.notion.so/2a709d8c37b880758a0dc9cc8d37e3d5?source=copy_link",
